@@ -1,0 +1,22 @@
+# Project-specific files
+/chicon
+
+# OS X-generated files
+._*
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+Icon\?
+
+# Object stuff
+*.o
+*.so
+.deps/
+*.dSYM/
+
+# Editor-generated files
+*~
+.*.s[a-w][a-z]
+*.sublime-workspace
+
