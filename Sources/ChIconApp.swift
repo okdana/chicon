@@ -12,9 +12,9 @@ import AppKit
  * Represents the command-line `chicon` application.
  */
 public class ChIconApp {
-	private var writer:   Writer
-	private var name:     String
-	private var version:  String
+	private var writer:  Writer
+	private var name:    String
+	private var version: String
 
 	/**
 	 * Initialiser.
@@ -43,9 +43,9 @@ public class ChIconApp {
 	 * @return Int32 A return status suitable for passing to exit().
 	 */
 	public func run(arguments: [String] = []) -> Int32 {
-		var args              = self.normaliseArguments(arguments)
-		var verbosity: Int    = 0
-		var mode:      String = "add"
+		var args:      [String] = self.normaliseArguments(arguments)
+		var verbosity: Int      = 0
+		var mode:      String   = "add"
 
 		argLoop: for (index, arg) in args.enumerate() {
 			switch arg {
