@@ -7,7 +7,7 @@ thumb-nail icons.
 
 ```
 Usage:
-  chicon [-h|-V] [-q|-v] [-c|-r] [--] <iconfile> [<destfile> ...]
+  chicon [-h|-V] [-q|-v] [-c|-r|-t] [--] <iconfile> [<destfile> ...]
 Operands:
   iconfile       Path to icon file, or file type
   destfile       Path to destination file(s)
