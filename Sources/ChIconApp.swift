@@ -194,8 +194,8 @@ public class ChIconApp {
 		verbosity: Int = 0
 	) -> Int32 {
 		let workspace: NSWorkspace = NSWorkspace.sharedWorkspace()
-		var success:   Bool
-		var ret:       Int32 = 0
+		var success: Bool
+		var ret:     Int32 = 0
 
 		for path in destPaths {
 			if !NSFileManager.defaultManager().fileExistsAtPath(path) {
@@ -299,7 +299,7 @@ public class ChIconApp {
 	private func normaliseArguments(arguments: [String]) -> [String] {
 		var options:      [String] = []
 		var operands:     [String] = []
-		var afterOptions: Bool = false
+		var afterOptions: Bool     = false
 
 		for arg in arguments {
 			switch true {
