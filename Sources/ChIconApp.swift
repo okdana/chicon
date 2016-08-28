@@ -241,7 +241,7 @@ public class ChIconApp {
 	 * @return Int32 Always 0.
 	 */
 	private func doHelp(brief: Bool = false, to: NSFileHandle? = nil) -> Int32 {
-		let synopsis = "\(self.name) [-h|-V] [-q|-v] [-c|-r] [--] <iconfile> [<destfile> ...]"
+		let synopsis = "\(self.name) [-h|-V] [-q|-v] [-c|-r|-t] [--] <iconfile> [<destfile> ...]"
 
 		if brief {
 			self.writer.write("usage: \(synopsis)", to: to)
