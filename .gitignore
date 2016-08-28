@@ -1,5 +1,8 @@
 # Project-specific files
 /chicon
+/chicon.tar
+/chicon.tgz
+/chicon.zip
 
 # OS X-generated files
 ._*
