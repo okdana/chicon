@@ -67,7 +67,7 @@ public class ChIconApp {
 					args = Array(args[index + 1 ..< args.count])
 					break argLoop
 				default:
-					self.writer.writeErr("\(name): Unrecognised option: \(arg)")
+					self.writer.writeErr("\(self.name): Unrecognised option: \(arg)")
 					self.doHelp(true, to: self.writer.stderr)
 					return 1
 			}
@@ -75,7 +75,7 @@ public class ChIconApp {
 
 		if (args.count < 1 || (mode == "type" && args.count < 2)) {
 			if verbosity >= 0 {
-				self.writer.writeErr("\(name): File path required")
+				self.writer.writeErr("\(self.name): File path required")
 				self.doHelp(true, to: self.writer.stderr)
 			}
 			return 1
@@ -95,7 +95,7 @@ public class ChIconApp {
 					verbosity: verbosity
 				)
 			default:
-				self.writer.writeErr("\(name): This should never happen!")
+				self.writer.writeErr("\(self.name): This should never happen!")
 				return 1
 		}
 	}
@@ -123,7 +123,7 @@ public class ChIconApp {
 
 		if (mode != "type" && !NSFileManager.defaultManager().fileExistsAtPath(iconPath)) {
 			if verbosity >= 0 {
-				self.writer.writeErr("\(name): No such file or directory: \(iconPath)")
+				self.writer.writeErr("\(self.name): No such file or directory: \(iconPath)")
 			}
 			return 1
 		}
@@ -138,9 +138,9 @@ public class ChIconApp {
 
 		if icon == nil {
 			if (mode == "type" && verbosity >= 0) {
-				self.writer.writeErr("\(name): Failed to load icon for file type: \(iconPath)")
+				self.writer.writeErr("\(self.name): Failed to load icon for file type: \(iconPath)")
 			} else if verbosity >= 0 {
-				self.writer.writeErr("\(name): Failed to load icon from file: \(iconPath)")
+				self.writer.writeErr("\(self.name): Failed to load icon from file: \(iconPath)")
 			}
 			return 1
 		}
@@ -148,7 +148,7 @@ public class ChIconApp {
 		for path in destPaths {
 			if !NSFileManager.defaultManager().fileExistsAtPath(path) {
 				if verbosity >= 0 {
-					self.writer.writeErr("\(name): No such file or directory: \(path)")
+					self.writer.writeErr("\(self.name): No such file or directory: \(path)")
 				}
 				ret = 1
 				continue
@@ -167,7 +167,7 @@ public class ChIconApp {
 
 			if !success {
 				if verbosity >= 0 {
-					self.writer.writeErr("\(name): Failed to set icon on file: \(path)")
+					self.writer.writeErr("\(self.name): Failed to set icon on file: \(path)")
 				}
 				ret = 1
 				continue
@@ -200,7 +200,7 @@ public class ChIconApp {
 		for path in destPaths {
 			if !NSFileManager.defaultManager().fileExistsAtPath(path) {
 				if verbosity >= 0 {
-					self.writer.writeErr("\(name): No such file or directory: \(path)")
+					self.writer.writeErr("\(self.name): No such file or directory: \(path)")
 				}
 				ret = 1
 				continue
@@ -214,7 +214,7 @@ public class ChIconApp {
 
 			if !success {
 				if verbosity >= 0 {
-					self.writer.writeErr("\(name): Failed to remove icon from file: \(path)")
+					self.writer.writeErr("\(self.name): Failed to remove icon from file: \(path)")
 				}
 				ret = 1
 				continue
