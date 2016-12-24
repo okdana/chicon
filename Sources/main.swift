@@ -8,8 +8,10 @@
 import Foundation
 
 let app = ChIconApp(
-	name:    NSURL(fileURLWithPath: Process.arguments[0]).lastPathComponent,
-	version: "0.1.0"
+	name:    NSURL(fileURLWithPath: CommandLine.arguments[0]).lastPathComponent,
+	version: "0.2.0"
 )
-exit(app.run(Array(Process.arguments[1..<Process.arguments.count])))
+exit(app.run(
+	arguments: Array(CommandLine.arguments[1..<CommandLine.arguments.count])
+))
 

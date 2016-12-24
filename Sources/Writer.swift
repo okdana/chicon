@@ -11,15 +11,15 @@ import Foundation
  * Provides several print()-style methods for writing to an arbitrary stream.
  */
 public struct Writer {
-	public let stdout: NSFileHandle
-	public let stderr: NSFileHandle
+	public let stdout: FileHandle
+	public let stderr: FileHandle
 
 	/**
 	 * Initialiser.
 	 */
 	public init() {
-		self.stdout = NSFileHandle.fileHandleWithStandardOutput()
-		self.stderr = NSFileHandle.fileHandleWithStandardError()
+		self.stdout = FileHandle.standardOutput
+		self.stderr = FileHandle.standardError
 	}
 
 	/**
@@ -27,18 +27,18 @@ public struct Writer {
 	 *
 	 * @see self._write()
 	 *
-	 * @param Any...        items      See _write().
-	 * @param String?       separator  See _write().
-	 * @param String?       terminator See _write().
-	 * @param NSFileHandle? to         See _write().
+	 * @param Any...      items      See _write().
+	 * @param String?     separator  See _write().
+	 * @param String?     terminator See _write().
+	 * @param FileHandle? to         See _write().
 	 *
 	 * @return Int The number of bytes written.
 	 */
 	public func write(
-		items:      Any...,
-		separator:  String?       = nil,
-		terminator: String?       = nil,
-		to:         NSFileHandle? = nil
+		_ items:    Any...,
+		separator:  String?     = nil,
+		terminator: String?     = nil,
+		to:         FileHandle? = nil
 	) -> Int {
 		return self._write(
 			items,
@@ -53,18 +53,18 @@ public struct Writer {
 	 *
 	 * @see self._write()
 	 *
-	 * @param Any...        items      See write().
-	 * @param String?       separator  See write().
-	 * @param String?       terminator See write().
-	 * @param NSFileHandle? to         See write(). Defaults to self.stdout.
+	 * @param Any...      items      See write().
+	 * @param String?     separator  See write().
+	 * @param String?     terminator See write().
+	 * @param FileHandle? to         See write(). Defaults to self.stdout.
 	 *
 	 * @return Int The number of bytes written.
 	 */
 	public func writeOut(
-		items:      Any...,
-		separator:  String?       = nil,
-		terminator: String?       = nil,
-		to:         NSFileHandle? = nil
+		_ items:    Any...,
+		separator:  String?     = nil,
+		terminator: String?     = nil,
+		to:         FileHandle? = nil
 	) -> Int {
 		return self._write(
 			items,
@@ -79,18 +79,18 @@ public struct Writer {
 	 *
 	 * @see self.write()
 	 *
-	 * @param Any...        items      See write().
-	 * @param String?       separator  See write().
-	 * @param String?       terminator See write().
-	 * @param NSFileHandle? to         See write(). Defaults to self.stderr.
+	 * @param Any...      items      See write().
+	 * @param String?     separator  See write().
+	 * @param String?     terminator See write().
+	 * @param FileHandle? to         See write(). Defaults to self.stderr.
 	 *
 	 * @return Int The number of bytes written.
 	 */
 	public func writeErr(
-		items:      Any...,
-		separator:  String?       = nil,
-		terminator: String?       = nil,
-		to:         NSFileHandle? = nil
+		_ items:    Any...,
+		separator:  String?     = nil,
+		terminator: String?     = nil,
+		to:         FileHandle? = nil
 	) -> Int {
 		return self._write(
 			items,
@@ -115,31 +115,31 @@ public struct Writer {
 	 *   (optional) The terminator string to write after all output items have
 	 *   been written. The default is "\n" (a new-line).
 	 *
-	 * @param NSFileHandle? to
+	 * @param FileHandle? to
 	 *   (optional) A stream / file handle to write to. The default is
 	 *   self.stdout.
 	 *
 	 * @return Int The number of bytes written.
 	 */
 	private func _write(
-		items:      [Any],
-		separator:  String?       = nil,
-		terminator: String?       = nil,
-		to:         NSFileHandle? = nil
+		_ items:    [Any],
+		separator:  String?     = nil,
+		terminator: String?     = nil,
+		to:         FileHandle? = nil
 	) -> Int {
-		let handle: NSFileHandle = to == nil ? self.stdout : to!
-		var prefix: String       = ""
-		var result: String       = ""
+		let handle: FileHandle = to == nil ? self.stdout : to!
+		var prefix: String     = ""
+		var result: String     = ""
 
 		for item in items {
 			result += prefix
-			result += String(item)
+			result += String(describing: item)
 			prefix  = separator == nil ? " " : separator!
 		}
 		result += terminator == nil ? "\n" : terminator!
 
-		handle.writeData(result.dataUsingEncoding(NSUTF8StringEncoding)!)
-		return result.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+		handle.write(result.data(using: String.Encoding.utf8)!)
+		return result.lengthOfBytes(using: String.Encoding.utf8)
 	}
 }
 

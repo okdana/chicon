@@ -47,7 +47,7 @@ public class ChIconApp {
 		var verbosity: Int      = 0
 		var mode:      String   = "add"
 
-		argLoop: for (index, arg) in args.enumerate() {
+		argLoop: for (index, arg) in args.enumerated() {
 			switch arg {
 				case "-h", "--help":
 					return self.doHelp()
@@ -68,7 +68,7 @@ public class ChIconApp {
 					break argLoop
 				default:
 					self.writer.writeErr("\(self.name): Unrecognised option: \(arg)")
-					self.doHelp(true, to: self.writer.stderr)
+					self.doHelp(brief: true, to: self.writer.stderr)
 					return 1
 			}
 		}
@@ -76,7 +76,7 @@ public class ChIconApp {
 		if (args.count < 1 || (mode == "type" && args.count < 2)) {
 			if verbosity >= 0 {
 				self.writer.writeErr("\(self.name): File path required")
-				self.doHelp(true, to: self.writer.stderr)
+				self.doHelp(brief: true, to: self.writer.stderr)
 			}
 			return 1
 		}
@@ -111,17 +111,17 @@ public class ChIconApp {
 	 * @return Int32 A return status suitable for passing to exit().
 	 */
 	private func doSetIcon(
-		iconPath:    String,
+		_ iconPath:  String,
 		_ destPaths: [String],
 		mode:        String = "add",
 		verbosity:   Int    = 0
 	) -> Int32 {
-		let workspace: NSWorkspace = NSWorkspace.sharedWorkspace()
+		let workspace: NSWorkspace = NSWorkspace.shared()
 		var icon:      NSImage?
 		var success:   Bool
 		var ret:       Int32 = 0
 
-		if (mode != "type" && !NSFileManager.defaultManager().fileExistsAtPath(iconPath)) {
+		if (mode != "type" && !FileManager.default.fileExists(atPath: iconPath)) {
 			if verbosity >= 0 {
 				self.writer.writeErr("\(self.name): No such file or directory: \(iconPath)")
 			}
@@ -131,9 +131,9 @@ public class ChIconApp {
 		if mode == "add" {
 			icon = NSImage(contentsOfFile: iconPath)
 		} else if mode == "copy" {
-			icon = workspace.iconForFile(iconPath)
+			icon = workspace.icon(forFile: iconPath)
 		} else if mode == "type" {
-			icon = workspace.iconForFileType(iconPath)
+			icon = workspace.icon(forFileType: iconPath)
 		}
 
 		if icon == nil {
@@ -146,7 +146,7 @@ public class ChIconApp {
 		}
 
 		for path in destPaths {
-			if !NSFileManager.defaultManager().fileExistsAtPath(path) {
+			if !FileManager.default.fileExists(atPath: path) {
 				if verbosity >= 0 {
 					self.writer.writeErr("\(self.name): No such file or directory: \(path)")
 				}
@@ -190,15 +190,15 @@ public class ChIconApp {
 	 * @return Int32 A return status suitable for passing to exit().
 	 */
 	private func doRemoveIcon(
-		destPaths: [String],
-		verbosity: Int = 0
+		_ destPaths: [String],
+		verbosity:   Int = 0
 	) -> Int32 {
-		let workspace: NSWorkspace = NSWorkspace.sharedWorkspace()
+		let workspace: NSWorkspace = NSWorkspace.shared()
 		var success: Bool
 		var ret:     Int32 = 0
 
 		for path in destPaths {
-			if !NSFileManager.defaultManager().fileExistsAtPath(path) {
+			if !FileManager.default.fileExists(atPath: path) {
 				if verbosity >= 0 {
 					self.writer.writeErr("\(self.name): No such file or directory: \(path)")
 				}
@@ -235,12 +235,12 @@ public class ChIconApp {
 	 *   (optional) Whether to print only the brief usage help. The default is
 	 *   false (print full help).
 	 *
-	 * @param NSFileHandle? to
+	 * @param FileHandle? to
 	 *   (optional) A stream to write to.
 	 *
 	 * @return Int32 Always 0.
 	 */
-	private func doHelp(brief: Bool = false, to: NSFileHandle? = nil) -> Int32 {
+	private func doHelp(brief: Bool = false, to: FileHandle? = nil) -> Int32 {
 		let synopsis = "\(self.name) [-h|-V] [-q|-v] [-c|-r|-t] [--] <iconfile> [<destfile> ...]"
 
 		if brief {
@@ -270,11 +270,11 @@ public class ChIconApp {
 	/**
 	 * Prints application version information.
 	 *
-	 * @param NSFileHandle? to (optional) A stream to write to.
+	 * @param FileHandle? to (optional) A stream to write to.
 	 *
 	 * @return Int32 Always 0.
 	 */
-	private func doVersion(to: NSFileHandle? = nil) -> Int32 {
+	private func doVersion(_ to: FileHandle? = nil) -> Int32 {
 		self.writer.write("\(self.name) version \(self.version)", to: to)
 		return 0
 	}
@@ -296,7 +296,7 @@ public class ChIconApp {
 	 *
 	 * @return [String] Zero or more normalised/sorted arguments.
 	 */
-	private func normaliseArguments(arguments: [String]) -> [String] {
+	private func normaliseArguments(_ arguments: [String]) -> [String] {
 		var options:      [String] = []
 		var operands:     [String] = []
 		var afterOptions: Bool     = false
@@ -317,12 +317,12 @@ public class ChIconApp {
 						operands += [arg]
 						continue
 					// Long argument — add to options
-					} else if arg[arg.startIndex.advancedBy(1)] == "-" {
+					} else if arg[arg.index(after: arg.startIndex)] == "-" {
 						options += [arg]
 						continue
 					}
 					// Short argument — add each character to options
-					for char in arg.substringFromIndex(arg.startIndex.advancedBy(1)).characters {
+					for char in arg.substring(from: arg.index(after: arg.startIndex)).characters {
 						// Avoid inserting a false '--'
 						if char == "-" {
 							continue
