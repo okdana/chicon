@@ -69,4 +69,3 @@ MIT.
   Contains a very similar utility (written in ObjC) called `seticon`.
 * [NSWorkspace class reference](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSWorkspace_Class/) —
   Apple's `NSWorkspace` reference.
-
