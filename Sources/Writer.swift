@@ -34,6 +34,7 @@ public struct Writer {
    *
    * @return Int The number of bytes written.
    */
+  @discardableResult
   public func write(
     _ items:    Any...,
     separator:  String?     = nil,
@@ -60,6 +61,7 @@ public struct Writer {
    *
    * @return Int The number of bytes written.
    */
+  @discardableResult
   public func writeOut(
     _ items:    Any...,
     separator:  String?     = nil,
@@ -86,6 +88,7 @@ public struct Writer {
    *
    * @return Int The number of bytes written.
    */
+  @discardableResult
   public func writeErr(
     _ items:    Any...,
     separator:  String?     = nil,

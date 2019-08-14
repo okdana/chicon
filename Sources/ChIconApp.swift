@@ -240,6 +240,7 @@ public class ChIconApp {
    *
    * @return Int32 Always 0.
    */
+  @discardableResult
   private func doHelp(brief: Bool = false, to: FileHandle? = nil) -> Int32 {
     let synopsis = "\(self.name) [-h|-V] [-q|-v] [-c|-r|-t] [--] <iconfile> [<destfile> ...]"
 
@@ -274,6 +275,7 @@ public class ChIconApp {
    *
    * @return Int32 Always 0.
    */
+  @discardableResult
   private func doVersion(_ to: FileHandle? = nil) -> Int32 {
     self.writer.write("\(self.name) version \(self.version)", to: to)
     return 0
