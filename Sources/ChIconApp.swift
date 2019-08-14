@@ -116,7 +116,7 @@ public class ChIconApp {
     mode:        String = "add",
     verbosity:   Int    = 0
   ) -> Int32 {
-    let workspace: NSWorkspace = NSWorkspace.shared()
+    let workspace: NSWorkspace = NSWorkspace.shared
     var icon:      NSImage?
     var success:   Bool
     var ret:       Int32 = 0
@@ -157,12 +157,12 @@ public class ChIconApp {
       workspace.setIcon(
         nil,
         forFile: path,
-        options: NSWorkspaceIconCreationOptions(rawValue: 0)
+        options: NSWorkspace.IconCreationOptions(rawValue: 0)
       )
       success = workspace.setIcon(
         icon,
         forFile: path,
-        options: NSWorkspaceIconCreationOptions(rawValue: 0)
+        options: NSWorkspace.IconCreationOptions(rawValue: 0)
       )
 
       if !success {
@@ -193,7 +193,7 @@ public class ChIconApp {
     _ destPaths: [String],
     verbosity:   Int = 0
   ) -> Int32 {
-    let workspace: NSWorkspace = NSWorkspace.shared()
+    let workspace: NSWorkspace = NSWorkspace.shared
     var success: Bool
     var ret:     Int32 = 0
 
@@ -209,7 +209,7 @@ public class ChIconApp {
       success = workspace.setIcon(
         nil,
         forFile: path,
-        options: NSWorkspaceIconCreationOptions(rawValue: 0)
+        options: NSWorkspace.IconCreationOptions(rawValue: 0)
       )
 
       if !success {
@@ -324,7 +324,7 @@ public class ChIconApp {
             continue
           }
           // Short argument — add each character to options
-          for char in arg.substring(from: arg.index(after: arg.startIndex)).characters {
+          for char in arg[arg.index(after: arg.startIndex)...] {
             // Avoid inserting a false '--'
             if char == "-" {
               continue
