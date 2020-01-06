@@ -45,9 +45,28 @@ chicon -r foo bar baz
 
 ## Installation
 
-* Download a pre-compiled binary from the
-[Releases](https://github.com/okdana/chicon/releases) page, or
-* clone the repo and run `make` (or `sudo make install`)
+Pre-compiled binaries are available on the [releases
+page](https://github.com/okdana/chicon/releases).
+
+### Homebrew
+
+If you're using Homebrew, you can install with a custom tap:
+
+```
+$ brew tap okdana/chicon https://github.com/okdana/chicon.git
+$ brew install okdana/chicon/chicon
+```
+
+### Building from Source
+
+To build from source:
+
+```
+$ git clone https://github.com/okdana/chicon.git
+$ cd chicon
+$ make
+# make install
+```
 
 ## Rationale
 
